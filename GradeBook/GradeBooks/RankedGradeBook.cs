@@ -47,7 +47,7 @@ namespace GradeBook.GradeBooks
             }
             finally
             {
-                throw new ArgumentOutOfRangeException();
+                throw new InvalidOperationException();
             }
 
 
