@@ -5,42 +5,51 @@ using GradeBook.Enums;
 
 namespace GradeBook.GradeBooks
 {
-    public class RankedGradeBook :BaseGradeBook
+    public class RankedGradeBook : BaseGradeBook
     {
-        public RankedGradeBook(string name) :base(name)
+        public RankedGradeBook(string name) : base(name)
         {
             Type = GradeBookType.Ranked;
         }
 
         public override char GetLetterGrade(double averageGrade)
         {
-            if (Students.Count > 5)
+            try
             {
-                switch (averageGrade)
+                if (Students.Count > 5)
                 {
-                    case double n when (int)n >= 90:
-                        return 'A';
+                    switch (averageGrade)
+                    {
+                        case double n when (int)n >= 90:
+                            return 'A';
 
-                    case double n when (int)n >= 80:
-                        return 'B';
+                        case double n when (int)n >= 80:
+                            return 'B';
 
-                    case double n when (int)n >= 70:
-                        return 'C';
+                        case double n when (int)n >= 70:
+                            return 'C';
 
-                    case double n when (int)n >= 60:
-                        return 'D';
+                        case double n when (int)n >= 60:
+                            return 'D';
 
-                    case double n when (int)n >= 90.00:
-                        return 'F';
+                        case double n when (int)n >= 90.00:
+                            return 'F';
 
-                }   
+                    }
+                }
+
+                return 'F';
+
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new InvalidOperationException();
             }
 
-            return 'F';
-         
 
-
-            
         }
     }
 }
