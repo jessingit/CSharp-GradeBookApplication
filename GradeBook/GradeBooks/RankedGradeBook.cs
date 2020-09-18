@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using GradeBook.Enums;
 
@@ -14,48 +15,33 @@ namespace GradeBook.GradeBooks
 
         public override char GetLetterGrade(double averageGrade)
         {
-            try
+            
+            // needs to be 5 to work
+            if (Students.Count < 5) throw new InvalidOperationException("This system requires at least 5 students");
+            //gets 20%
+            var studentRank = (int) Math.Ceiling(Students.Count * 0.2);
+            //sort it into descending easier to compare-- linq -- foreach e in Ag , select 1 not all to list
+            var curGrade = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToList();
+            //1 sets the index 
+            if (curGrade[studentRank-1] <= averageGrade)
             {
-                if (Students.Count > 5)
-                {
-                    switch (averageGrade)
-                    {
-                        case double n when (int)n >= 90:
-                            return 'A';
-
-                        case double n when (int)n >= 80:
-                            return 'B';
-
-                        case double n when (int)n >= 70:
-                            return 'C';
-
-                        case double n when (int)n >= 60:
-                            return 'D';
-
-                        default:
-                            return 'F';
-
-                    }
-                }
-
-
-
+                 return 'A';
             }
-            catch (Exception e)
+            else if (curGrade[(studentRank*2) - 1] <= averageGrade)
             {
-                return 'F';
+                return 'B';
             }
-            finally
+            else if (curGrade[(studentRank * 3) - 1] <= averageGrade)
             {
-                throw new InvalidOperationException();
+                return 'C';
             }
-
-
-
-
-
-
-
+            else if (curGrade[(studentRank * 4) - 1] <= averageGrade)
+            {
+                return 'D';
+            }
+            else return 'F';
+            
+            
         }
     }
 }
