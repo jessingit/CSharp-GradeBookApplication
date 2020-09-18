@@ -32,22 +32,28 @@ namespace GradeBook.GradeBooks
                         case double n when (int)n >= 60:
                             return 'D';
 
-                        case double n when (int)n >= 90.00:
+                        default:
                             return 'F';
 
                     }
                 }
-
-                return 'F';
 
 
 
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw new InvalidOperationException();
+                return 'F';
             }
+            finally
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+
+
+
+
 
 
         }
